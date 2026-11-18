@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARVO (@arvorennix)</title>
+
+  <!-- Browser Tab, Windows Pin & Mobile Home Screen Icon -->
+  <link rel="icon" type="image/png" href="images/icon.png">
+  <link rel="apple-touch-icon" href="images/icon.png">
+  <meta name="theme-color" content="#E52B50">
+
+  <!-- OpenGraph / Discord & Social Link Preview -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ARVO (@arvorennix)">
+  <meta property="og:description" content="Hey! Im just a simple furry who loves to code!">
+  <meta property="og:image" content="images/icon.png">
+
+  <!-- Twitter / X Large Card Preview -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ARVO (@arvorennix)">
+  <meta name="twitter:description" content="Hey! Im just a simple furry who loves to code!">
+  <meta name="twitter:image" content="images/icon.png">
+
+  <!-- Google Fonts (Syne + Space Grotesk + JetBrains Mono) -->
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Amaranth Gray/Red — Dark Material 3 Palette */
+      --bg-base: #120C0E;
+      --surface-card: #1E1518;
+      --surface-row: #261B1F;
+      --surface-row-hover: #322328;
+      --amaranth: #E52B50;
+      --amaranth-bright: #FFB2BF;
+      --amaranth-dim: rgba(229, 43, 80, 0.16);
+      --border-subtle: rgba(255, 178, 191, 0.14);
+      --border-hover: rgba(255, 178, 191, 0.45);
+      --text-main: #FAECF0;
+      --text-muted: #BEA5AC;
+      --m3-easing: cubic-bezier(0.2, 0, 0, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0F090B;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(229, 43, 80, 0.38);
+      border-radius: 999px;
+      border: 2px solid #0F090B;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 178, 191, 0.65);
+    }
+
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(229, 43, 80, 0.42) #0F090B;
+    }
+
+    body {
+     background-color: var(--bg-base);
+     color: var(--text-main);
+     font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+     min-height: 100vh;
+     display: flex;
+     flex-direction: column;
+     padding: 2.5rem 1.5rem 2.5rem;
+     position: relative;
+     overflow-x: hidden;
+    }
+
+
+    /* Lighter Blur & Dim on images/bg.png */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -16px;
+      z-index: -2;
+      background-image: url("images/bg.png");
+      background-size: cover;
+      background-position: center;
+      filter: blur(6px) brightness(0.68);
+      transform: scale(1.02);
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(229, 43, 80, 0.14) 0%, transparent 48%),
+        linear-gradient(180deg, rgba(18, 12, 14, 0.25) 0%, rgba(18, 12, 14, 0.65) 100%);
+      pointer-events: none;
+    }
+
+    /* Entrance Animations */
+    @keyframes riseFade {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      opacity: 0;
+      animation: riseFade 0.55s var(--m3-easing) forwards;
+    }
+
+    .delay-1 { animation-delay: 0.06s; }
+    .delay-2 { animation-delay: 0.12s; }
+    .delay-3 { animation-delay: 0.18s; }
+    .delay-4 { animation-delay: 0.24s; }
+
+    /* Master Two-Column Grid */
+    .hub-container {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      flex: 1;
+      display: grid;
+      grid-template-columns: 480px 1fr;
+      gap: 2.75rem;
+      align-items: start;
+    }
+
+    /* ================= LEFT COLUMN: SOLID AMARANTH GRAY/RED CARD ================= */
+    .profile-card {
+      position: sticky;
+      top: 2.25rem;
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 32px;
+      overflow: hidden;
+      padding-bottom: 1.65rem;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    .hero-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 28%, rgba(229, 43, 80, 0.45) 0%, rgba(120, 20, 42, 0.25) 50%, transparent 78%),
+        linear-gradient(180deg, #2D1A20 0%, var(--surface-card) 100%);
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-fade {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(30, 21, 24, 0) 38%,
+        rgba(30, 21, 24, 0.72) 74%,
+        var(--surface-card) 100%
+      );
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      mask-image: linear-gradient(to bottom, transparent 42%, black 92%);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 42%, black 92%);
+      pointer-events: none;
+    }
+
+    .profile-header {
+      position: relative;
+      z-index: 2;
+      margin-top: -5.5rem;
+      padding: 0 1.75rem 1.15rem;
+      text-align: center;
+    }
+
+    .display-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2.7rem;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: #FFFFFF;
+      margin-bottom: 0.35rem;
+    }
+
+
+    .handle-text {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--amaranth-bright);
+      margin-bottom: 0.65rem;
+    }
+
+    .bio-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 400;
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+
+    /* Color-Coded Trait Pills */
+    .traits-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      padding: 0 1.4rem 1.45rem;
+    }
+
+    .trait-pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 600;
+      border-radius: 999px;
+      padding: 0.32rem 0.75rem;
+      border: 1px solid transparent;
+      transition: transform 0.2s var(--m3-easing);
+    }
+
+    .trait-pill:hover {
+      transform: translateY(-2px);
+    }
+
+    .trait-furry { color: #F9A8D4; background: rgba(244, 114, 182, 0.14); border-color: rgba(244, 114, 182, 0.32); }
+    .trait-gamedev { color: #D6BAFF; background: rgba(182, 133, 255, 0.16); border-color: rgba(182, 133, 255, 0.35); }
+    .trait-gammer { color: #6EE7B7; background: rgba(16, 185, 129, 0.14); border-color: rgba(16, 185, 129, 0.32); }
+    .trait-motion { color: #7DD3FC; background: rgba(56, 189, 248, 0.14); border-color: rgba(56, 189, 248, 0.32); }
+    .trait-author { color: #FCD34D; background: rgba(245, 158, 11, 0.14); border-color: rgba(245, 158, 11, 0.32); }
+    .trait-aries { color: #FF9EB1; background: rgba(229, 43, 80, 0.22); border-color: rgba(229, 43, 80, 0.44); }
+    .trait-pride { color: #E9D5FF; background: linear-gradient(90deg, rgba(244, 114, 182, 0.18), rgba(168, 85, 247, 0.18), rgba(96, 165, 250, 0.18)); border-color: rgba(192, 132, 252, 0.4); }
+    .trait-quirky { color: #5EEAD4; background: rgba(20, 184, 166, 0.14); border-color: rgba(20, 184, 166, 0.32); }
+
+    /* 6 Rectangular Link Rows inside Left Card */
+    .cards-list {
+      padding: 0 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .link-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--surface-row);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 0.9rem 1.2rem;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.94rem;
+      transition: transform 0.22s var(--m3-easing),
+                  background-color 0.22s ease,
+                  border-color 0.22s ease,
+                  box-shadow 0.22s ease;
+    }
+
+    .link-row:hover {
+      background-color: var(--surface-row-hover);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 22px rgba(229, 43, 80, 0.16);
+    }
+
+    .link-row:active {
+      transform: scale(0.985);
+    }
+
+    .row-left {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .index-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--amaranth-bright);
+      background-color: var(--amaranth-dim);
+      border: 1px solid rgba(229, 43, 80, 0.34);
+      border-radius: 10px;
+      padding: 0.35rem 0.55rem;
+      line-height: 1;
+    }
+
+    .link-sub {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 0.35rem;
+    }
+
+    /* Unified Wiki-Style SVG Icon */
+    .icon-svg {
+      width: 18px;
+      height: 18px;
+      stroke: var(--text-muted);
+      stroke-width: 2;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex-shrink: 0;
+      transition: transform 0.22s var(--m3-easing), stroke 0.22s ease;
+    }
+
+    .link-row:hover .icon-svg,
+    .project-row:hover .icon-svg {
+      stroke: var(--amaranth-bright);
+      transform: translate(2px, -2px);
+    }
+
+    .link-row:hover .icon-arrow-right,
+    .project-row:hover .icon-arrow-right,
+    .cta-pill:hover .icon-arrow-right {
+      transform: translateX(3px);
+    }
+
+    /* ================= RIGHT COLUMN: FLAT SECTIONS (NO CARD-ON-CARD) ================= */
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 2.25rem;
+      padding-top: 0.35rem;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      padding: 0 0.25rem;
+    }
+
+    .section-title-group {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .section-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+    }
+
+    .section-slug {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      color: var(--amaranth-bright);
+      opacity: 0.85;
+    }
+
+    /* Featured Spotlight Card (Standalone, No Nested Wrapper) */
+    .featured-banner {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      background-color: var(--surface-card);
+      border: 1px solid rgba(229, 43, 80, 0.34);
+      border-radius: 26px;
+      padding: 1.35rem;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+      transition: transform 0.25s var(--m3-easing), border-color 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .featured-banner:hover {
+      transform: translateY(-3px);
+      border-color: var(--amaranth-bright);
+      box-shadow: 0 22px 52px rgba(229, 43, 80, 0.18);
+    }
+
+    /* Clean Rounded Mod Icon Directly */
+    .mod-icon-img {
+      width: 128px;
+      height: 128px;
+      border-radius: 26px;
+      object-fit: cover;
+      flex-shrink: 0;
+      display: block;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .wiki-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--amaranth-bright);
+      background-color: var(--amaranth-dim);
+      border: 1px solid rgba(229, 43, 80, 0.3);
+      border-radius: 8px;
+      padding: 0.22rem 0.55rem;
+    }
+
+    .wiki-tag-amber {
+      color: #FCD34D;
+      background-color: rgba(245, 158, 11, 0.14);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .featured-info h3 {
+      font-size: 1.32rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+      color: #FFFFFF;
+    }
+
+    .featured-info p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.52;
+      margin-bottom: 1rem;
+    }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .cta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: #120C0E;
+      background-color: var(--amaranth-bright);
+      padding: 0.52rem 1.05rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s var(--m3-easing), background-color 0.2s ease;
+    }
+
+    .cta-pill .icon-svg {
+      stroke: #120C0E;
+      width: 16px;
+      height: 16px;
+    }
+
+    .cta-pill:hover {
+      background-color: #FFFFFF;
+      transform: translateY(-1px);
+    }
+
+    .cta-pill-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--amaranth-bright);
+      background-color: rgba(229, 43, 80, 0.16);
+      border: 1px solid rgba(255, 178, 191, 0.32);
+      padding: 0.52rem 1.05rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.2s var(--m3-easing), background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .cta-pill-secondary .icon-svg {
+      stroke: var(--amaranth-bright);
+      width: 16px;
+      height: 16px;
+    }
+
+    .cta-pill-secondary:hover {
+      background-color: rgba(229, 43, 80, 0.28);
+      border-color: var(--amaranth-bright);
+      transform: translateY(-1px);
+    }
+
+    .cta-pill-secondary:hover .icon-svg {
+      transform: translate(2px, -2px);
+    }
+
+    /* 3 Full-Width Rectangular Project Rows (Matches Left Link Style) */
+    .projects-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .project-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      background-color: var(--surface-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 22px;
+      padding: 1.15rem 1.4rem;
+      text-decoration: none;
+      color: var(--text-main);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+      transition: transform 0.22s var(--m3-easing),
+                  background-color 0.22s ease,
+                  border-color 0.22s ease,
+                  box-shadow 0.22s ease;
+    }
+
+    .project-row:hover {
+      background-color: var(--surface-row);
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(229, 43, 80, 0.16);
+    }
+
+    .project-row:active {
+      transform: scale(0.99);
+    }
+
+    .project-row-left {
+      display: flex;
+      align-items: center;
+      gap: 1.05rem;
+    }
+
+    .project-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+    }
+
+    .project-title-line {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .project-title-line h4 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    .project-meta p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .project-row-right {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      color: var(--amaranth-bright);
+      white-space: nowrap;
+    }
+
+    /* Full-Width Centered Footer at Bottom of Page */
+    .hub-footer {
+      width: 100%;
+      max-width: 1280px;
+      margin: 3rem auto 0;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 178, 191, 0.12);
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1060px) {
+      .hub-container {
+        grid-template-columns: 1fr;
+        max-width: 640px;
+        gap: 2.25rem;
+      }
+
+      .profile-card {
+        position: static;
+      }
+    }
+
+    @media (max-width: 620px) {
+      body {
+        padding: 1.25rem 1rem 2.5rem;
+      }
+
+      .featured-banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .mod-icon-img {
+        width: 96px;
+        height: 96px;
+      }
+
+      .project-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .project-row-right {
+        align-self: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hub-container">
+    <aside class="profile-card animate-in">
+      <div class="hero-wrapper">
+        <img src="images/hero.png" alt="ARVO hero" class="hero-image" onerror="this.style.display='none'">
+        <div class="hero-fade"></div>
+      </div>
+
+      <header class="profile-header">
+        <h1 class="display-name">ARVO</h1>
+        <p class="handle-text">@arvorennix</p>
+        <p class="bio-text">Hey! Im just a simple furry who loves to code!</p>
+      </header>
+
+      <div class="traits-row" aria-label="Personal traits">
+        <span class="trait-pill trait-furry">Furry</span>
+        <span class="trait-pill trait-gamedev">Game Dev</span>
+        <span class="trait-pill trait-gammer">Gammer</span>
+        <span class="trait-pill trait-motion">UI/Motion Design</span>
+        <span class="trait-pill trait-author">Author</span>
+        <span class="trait-pill trait-aries">Aries</span>
+        <span class="trait-pill trait-pride">Gay/Bi</span>
+        <span class="trait-pill trait-quirky">Quirky</span>
+      </div>
+
+      <nav class="cards-list" aria-label="Primary links">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="link-row">
+          <div class="row-left">
+            <span class="index-badge">01</span>
+            <span>Instagram <span class="link-sub">@arvorennix</span></span>
+          </div>
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+
+        <a href="https://threads.com" target="_blank" rel="noopener noreferrer" class="link-row">
+          <div class="row-left">
+            <span class="index-badge">02</span>
+            <span>Threads <span class="link-sub">@arvorennix</span></span>
+          </div>
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+
+        <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="link-row">
+          <div class="row-left">
+            <span class="index-badge">03</span>
+            <span>TikTok <span class="link-sub">@arvorennix</span></span>
+          </div>
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="link-row">
+          <div class="row-left">
+            <span class="index-badge">04</span>
+            <span>YouTube <span class="link-sub">@arvorennix</span></span>
+          </div>
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+
+        <a href="https://discord.gg" target="_blank" rel="noopener noreferrer" class="link-row">
+          <div class="row-left">
+            <span class="index-badge">05</span>
+            <span>Discord <span class="link-sub">The Protogen Den</span></span>
+          </div>
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+
+        <a href="https://modrinth.com" target="_blank" rel="noopener noreferrer" class="link-row">
+          <div class="row-left">
+            <span class="index-badge">06</span>
+            <span>Modrinth <span class="link-sub">arvorennix</span></span>
+          </div>
+          <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+      </nav>
+    </aside>
+
+        <main class="right-column">
+      <section class="animate-in delay-1">
+        <div class="section-header">
+          <div class="section-title-group">
+            <h2 class="section-title">Featured Project</h2>
+            <span class="section-slug">hub/featured</span>
+          </div>
+          <span class="wiki-tag">Pinned</span>
+        </div>
+
+        <div class="featured-banner">
+          <img src="images/mod-icon.png" alt="Amethyst Bound Icon" class="mod-icon-img">
+          <div class="featured-info">
+            <div class="tag-row">
+              <span class="wiki-tag">Fabric</span>
+              <span class="wiki-tag">MC 26.1.2 – 26.3</span>
+              <span class="wiki-tag">Vanilla-Friendly</span>
+              <span class="wiki-tag wiki-tag-amber">Under Review</span>
+            </div>
+            <h3>Amethyst Bound</h3>
+            <p>A vanilla-friendly Minecraft expansion mod giving Amethyst new uses—featuring balanced tools, armor, Horse &amp; Nautilus gear, and the signature Amethyst Dagger right between Iron and Diamond.</p>
+            <div class="cta-row">
+              <a href="https://modrinth.com" target="_blank" rel="noopener noreferrer" class="cta-pill">
+                <span>View on Modrinth</span>
+                <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+              <a href="#" class="cta-pill-secondary">
+                <span>Show Wiki</span>
+                <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="animate-in delay-2">
+        <div class="section-header">
+          <div class="section-title-group">
+            <h2 class="section-title">Projects &amp; Catalog</h2>
+            <span class="section-slug">hub/projects</span>
+          </div>
+          <span class="section-slug">03 Items</span>
+        </div>
+
+        <div class="projects-stack">
+          <a href="#" class="project-row">
+            <div class="project-row-left">
+              <span class="index-badge">01</span>
+              <div class="project-meta">
+                <div class="project-title-line">
+                  <h4>Amethyst Bound Wiki</h4>
+                  <span class="wiki-tag">Wiki v2.2</span>
+                </div>
+                <p>Official Modrinth Wiki featuring item &amp; stat catalogs, crafting recipes, custom advancements, and gallery showcases.</p>
+              </div>
+            </div>
+            <div class="project-row-right">
+              <span>Open Wiki</span>
+              <svg class="icon-svg icon-arrow-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+
+          <a href="https://modrinth.com" target="_blank" rel="noopener noreferrer" class="project-row">
+            <div class="project-row-left">
+              <span class="index-badge">02</span>
+              <div class="project-meta">
+                <div class="project-title-line">
+                  <h4>Amethyst Bound</h4>
+                  <span class="wiki-tag">Fabric Mod</span>
+                </div>
+                <p>Core vanilla-friendly progression mod adding Amethyst tools, armor sets, mount armor, and custom advancements.</p>
+              </div>
+            </div>
+            <div class="project-row-right">
+              <span>Modrinth</span>
+              <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </div>
+          </a>
+
+          <a href="https://modrinth.com" target="_blank" rel="noopener noreferrer" class="project-row">
+            <div class="project-row-left">
+              <span class="index-badge">03</span>
+              <div class="project-meta">
+                <div class="project-title-line">
+                  <h4>Amethyst Bound: 3D Tools Add-on</h4>
+                  <span class="wiki-tag">Resource Pack</span>
+                </div>
+                <p>Official Java Edition resource pack add-on giving all Amethyst Bound tools a crisp, vanilla-friendly 3D model upgrade.</p>
+              </div>
+            </div>
+            <div class="project-row-right">
+              <span>Modrinth</span>
+              <svg class="icon-svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </div>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="hub-footer animate-in delay-3">
+    Created &amp; maintained by ARVO (@arvorennix) • © 2026 ArvoStudios
+  </footer>
+
+</body>
+</html>
+
+
